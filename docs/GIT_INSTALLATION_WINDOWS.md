@@ -91,33 +91,6 @@ Before using Git, you need to configure your name and email:
    cd repository-name
    ```
 
-### Option B: Clone via SSH (More Secure, Requires Setup)
-
-If you prefer SSH (recommended for frequent use):
-
-1. **Generate SSH key** (if you don't have one):
-   ```
-   ssh-keygen -t ed25519 -C "your.email@example.com"
-   ```
-   - Press Enter to accept default file location
-   - Enter a passphrase (optional but recommended) or press Enter twice for no passphrase
-
-2. **Copy your public key**:
-   ```
-   type %USERPROFILE%\.ssh\id_ed25519.pub
-   ```
-   - Copy the entire output (starts with `ssh-ed25519`)
-
-3. **Add SSH key to GitHub/GitLab**:
-   - GitHub: Settings → SSH and GPG keys → New SSH key
-   - GitLab: Preferences → SSH Keys → Add SSH Key
-   - Paste your key and save
-
-4. **Clone using SSH**:
-   ```
-   git clone git@github.com:username/repository-name.git
-   ```
-
 ## Part 4: Pushing Code and Images to the Repository
 
 ### Basic Workflow
@@ -157,25 +130,6 @@ If you prefer SSH (recommended for frequent use):
    ```
    (If your default branch is `master`, use `git push origin master` instead)
 
-### First Time Push (If Repository is Empty)
-
-If this is a new repository or first push:
-
-1. **Create or check for a README** (optional but recommended)
-2. **Add all files**:
-   ```
-   git add .
-   ```
-3. **Make your first commit**:
-   ```
-   git commit -m "Initial commit"
-   ```
-4. **Set upstream and push**:
-   ```
-   git push -u origin main
-   ```
-   (The `-u` flag sets up tracking so future pushes can just use `git push`)
-
 ### Handling Large Images
 
 If you have large image files:
@@ -186,19 +140,6 @@ If you have large image files:
    git status
    ```
 
-2. **GitHub has a 100MB file size limit**. For larger files:
-   - Consider using Git LFS (Large File Storage):
-     ```
-     git lfs install
-     git lfs track "*.jpg"
-     git lfs track "*.png"
-     git add .gitattributes
-     git add .
-     git commit -m "Add images with LFS"
-     git push origin main
-     ```
-
-3. **Or compress images** before adding them
 
 ### Common Commands Reference
 
