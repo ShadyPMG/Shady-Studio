@@ -39,6 +39,10 @@ to{opacity:1;}
 /* HEADER */
 /* ============================= */
 
+body.lightbox-open .header{
+display:none;
+}
+
 .header{
 display:flex;
 justify-content:space-between;

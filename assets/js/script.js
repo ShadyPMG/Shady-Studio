@@ -124,6 +124,7 @@ lightboxImg.classList.add("show");
       if (desc) desc.textContent = img.dataset.desc || "";
 
       lightbox.classList.add("active");
+document.body.classList.add("lightbox-open");
     });
   });
 
@@ -159,8 +160,9 @@ lightboxImg.classList.add("show");
   });
 
   // CLOSE
-  closeBtn?.addEventListener("click", () => {
-    lightbox.classList.remove("active");
+ closeBtn?.addEventListener("click", () => {
+  lightbox.classList.remove("active");
+  document.body.classList.remove("lightbox-open");
     zoomed = false;
     lightboxImg.style.transform = "scale(1)";
     lightboxImg.style.transformOrigin = "center";
@@ -168,8 +170,9 @@ lightboxImg.classList.add("show");
   });
 
   lightbox.addEventListener("click", e=>{
-    if(e.target === lightbox){
-      lightbox.classList.remove("active");
+  if(e.target === lightbox){
+    lightbox.classList.remove("active");
+    document.body.classList.remove("lightbox-open");
       zoomed = false;
       lightboxImg.style.transform = "scale(1)";
       lightboxImg.style.transformOrigin = "center";
