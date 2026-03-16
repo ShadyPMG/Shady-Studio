@@ -153,15 +153,43 @@ if (lightbox && lightboxImg) {
     }
   });
 
-  lightboxImg.addEventListener("mousemove", e => {
-    if (!zoomed) return;
+ // =============================
+// MOBILE SWIPE NAVIGATION
+// =============================
 
-    const rect = lightboxImg.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+let touchStartX = 0;
+let touchEndX = 0;
 
-    lightboxImg.style.transformOrigin = `${x}% ${y}%`;
-  });
+lightbox.addEventListener("touchstart", e => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener("touchend", e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe(){
+
+  const swipeDistance = touchEndX - touchStartX;
+
+  // minimum swipe distance
+  if(Math.abs(swipeDistance) < 50) return;
+
+  // swipe left → next image
+  if(swipeDistance < 0){
+    currentIndex++;
+    if(currentIndex >= galleryImages.length) currentIndex = 0;
+    showImage();
+  }
+
+  // swipe right → previous image
+  if(swipeDistance > 0){
+    currentIndex--;
+    if(currentIndex < 0) currentIndex = galleryImages.length - 1;
+    showImage();
+  }
+
 }
 
 // =============================
@@ -242,7 +270,9 @@ if (canvas) {
 
   function initParticles() {
     particles = [];
-    for (let i = 0; i < 350; i++) {
+    const particleCount = window.innerWidth < 768 ? 120 : 350;
+
+for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
   }
