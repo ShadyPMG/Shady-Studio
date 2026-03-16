@@ -117,7 +117,8 @@ if (lightbox && lightboxImg) {
         currentIndex = 0;
       }
 
-      showImage();
+     showImage();
+lightboxImg.classList.add("show");
 
       if (title) title.textContent = img.dataset.title || "";
       if (desc) desc.textContent = img.dataset.desc || "";
@@ -128,8 +129,20 @@ if (lightbox && lightboxImg) {
 
   // SHOW IMAGE
   function showImage(){
-    lightboxImg.src = galleryImages[currentIndex].trim();
-  }
+
+lightboxImg.classList.remove("show");
+
+setTimeout(()=>{
+
+lightboxImg.src = galleryImages[currentIndex].trim();
+
+requestAnimationFrame(()=>{
+lightboxImg.classList.add("show");
+});
+
+},120);
+
+}
 
   // NEXT
   nextBtn?.addEventListener("click", () => {
@@ -201,7 +214,7 @@ if (lightbox && lightboxImg) {
   let touchStartX = 0;
   let touchEndX = 0;
 
-  lightbox.addEventListener("touchstart", e=>{
+ lightboxImg.addEventListener("touchstart", e=>{
     touchStartX = e.changedTouches[0].screenX;
   });
 
