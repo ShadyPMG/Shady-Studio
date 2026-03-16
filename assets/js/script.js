@@ -35,6 +35,18 @@ window.addEventListener("DOMContentLoaded", revealOnScroll);
 // =============================
 const categoryLinks = document.querySelectorAll(".work-categories a");
 const projects = document.querySelectorAll(".project");
+const mobileFilter = document.getElementById("mobile-filter");
+
+function filterProjects(category) {
+  projects.forEach(project => {
+    const type = project.dataset.type;
+    if (category === "all" || type === category) {
+      project.classList.remove("hide");
+    } else {
+      project.classList.add("hide");
+    }
+  });
+}
 
 categoryLinks.forEach(link => {
   link.addEventListener("click", e => {
@@ -44,17 +56,30 @@ categoryLinks.forEach(link => {
     link.classList.add("active");
 
     const category = link.dataset.category;
+    filterProjects(category);
 
-    projects.forEach(project => {
-      const type = project.dataset.type;
-      if (category === "all" || type === category) {
-        project.classList.remove("hide");
-      } else {
-        project.classList.add("hide");
+    // Sync mobile dropdown
+    if (mobileFilter) {
+      mobileFilter.value = category;
+    }
+  });
+});
+
+// Mobile dropdown filter
+if (mobileFilter) {
+  mobileFilter.addEventListener("change", e => {
+    const category = e.target.value;
+    filterProjects(category);
+
+    // Sync button states
+    categoryLinks.forEach(l => {
+      l.classList.remove("active");
+      if (l.dataset.category === category) {
+        l.classList.add("active");
       }
     });
   });
-});
+}
 
 // =============================
 // LIGHTBOX
