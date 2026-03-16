@@ -771,14 +771,14 @@ color:#bbb;
 /* ============================= */
 
 .reveal{
-opacity:0;
-transform:translateY(60px);
-transition:.8s ease;
+opacity:1;
+transform:none;
 }
 
 .reveal.active{
 opacity:1;
 transform:translateY(0);
+transition:opacity .6s ease, transform .6s ease;
 }
 
 /* ============================= */
@@ -946,7 +946,7 @@ transform:translateY(-3px);
 
 /* hide on mobile */
 @media (max-width:900px){
-  .art-corner{display:none;}
+  .art-corner{opacity:.6;}
 }
 
 

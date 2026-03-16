@@ -15,18 +15,19 @@ if (hero) {
 // =============================
 const reveals = document.querySelectorAll(".reveal");
 
-function revealOnScroll() {
-  reveals.forEach(el => {
+function revealOnScroll(){
+  reveals.forEach(el=>{
     const windowHeight = window.innerHeight;
     const elementTop = el.getBoundingClientRect().top;
 
-    if (elementTop < windowHeight - 100) {
+    if(elementTop < windowHeight - 100){
       el.classList.add("active");
     }
   });
 }
 
 window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
 window.addEventListener("load", revealOnScroll);
 window.addEventListener("DOMContentLoaded", revealOnScroll);
 
@@ -99,6 +100,7 @@ if (lightbox && lightboxImg) {
   let galleryImages = [];
   let currentIndex = 0;
   let zoomed = false;
+}
 
   // OPEN
   images.forEach(img => {
@@ -198,17 +200,14 @@ function handleSwipe(){
 
   const swipeDistance = touchEndX - touchStartX;
 
-  // minimum swipe distance
   if(Math.abs(swipeDistance) < 50) return;
 
-  // swipe left → next image
   if(swipeDistance < 0){
     currentIndex++;
     if(currentIndex >= galleryImages.length) currentIndex = 0;
     showImage();
   }
 
-  // swipe right → previous image
   if(swipeDistance > 0){
     currentIndex--;
     if(currentIndex < 0) currentIndex = galleryImages.length - 1;
@@ -216,6 +215,8 @@ function handleSwipe(){
   }
 
 }
+
+} // ← this closing bracket fixes the script
 
 // =============================
 // PARTICLES
