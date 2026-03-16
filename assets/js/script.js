@@ -183,6 +183,17 @@ if (lightbox && lightboxImg) {
     }
   });
 
+  // Pan: when zoomed, image follows mouse (transform-origin tracks cursor)
+  lightboxImg.addEventListener("mousemove", e => {
+    if (!zoomed) return;
+
+    const rect = lightboxImg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+  });
+
   // =============================
   // MOBILE SWIPE
   // =============================
