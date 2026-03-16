@@ -89,6 +89,7 @@ const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
 if (lightbox && lightboxImg) {
+
   const title = document.getElementById("lightbox-title");
   const desc = document.getElementById("lightbox-desc");
 
@@ -97,14 +98,15 @@ if (lightbox && lightboxImg) {
   const nextBtn = document.querySelector(".lightbox-next");
 
   const images = document.querySelectorAll(".project img");
+
   let galleryImages = [];
   let currentIndex = 0;
   let zoomed = false;
-}
 
   // OPEN
   images.forEach(img => {
     img.addEventListener("click", () => {
+
       const gallery = img.dataset.gallery;
 
       if (gallery) {
@@ -125,98 +127,72 @@ if (lightbox && lightboxImg) {
   });
 
   // SHOW IMAGE
-  function showImage() {
+  function showImage(){
     lightboxImg.src = galleryImages[currentIndex].trim();
   }
 
-  // NEXT / PREV
+  // NEXT
   nextBtn?.addEventListener("click", () => {
     currentIndex++;
-    if (currentIndex >= galleryImages.length) currentIndex = 0;
+    if(currentIndex >= galleryImages.length) currentIndex = 0;
     showImage();
   });
 
+  // PREV
   prevBtn?.addEventListener("click", () => {
     currentIndex--;
-    if (currentIndex < 0) currentIndex = galleryImages.length - 1;
+    if(currentIndex < 0) currentIndex = galleryImages.length - 1;
     showImage();
   });
 
   // CLOSE
   closeBtn?.addEventListener("click", () => {
     lightbox.classList.remove("active");
-    zoomed = false;
-    lightboxImg.style.transform = "scale(1)";
-    lightboxImg.style.transformOrigin = "center";
-    lightboxImg.style.cursor = "zoom-in";
   });
 
-  lightbox.addEventListener("click", e => {
-    if (e.target === lightbox) {
+  lightbox.addEventListener("click", e=>{
+    if(e.target === lightbox){
       lightbox.classList.remove("active");
-      zoomed = false;
-      lightboxImg.style.transform = "scale(1)";
-      lightboxImg.style.transformOrigin = "center";
-      lightboxImg.style.cursor = "zoom-in";
     }
   });
 
-  // DOUBLE CLICK ZOOM + PAN
-  lightboxImg.addEventListener("dblclick", e => {
-    const rect = lightboxImg.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+  // =============================
+  // MOBILE SWIPE
+  // =============================
 
-    if (!zoomed) {
-      lightboxImg.style.transformOrigin = `${x}% ${y}%`;
-      lightboxImg.style.transform = "scale(1.6)";
-      lightboxImg.style.cursor = "zoom-out";
-      zoomed = true;
-    } else {
-      lightboxImg.style.transform = "scale(1)";
-      lightboxImg.style.transformOrigin = "center";
-      lightboxImg.style.cursor = "zoom-in";
-      zoomed = false;
-    }
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener("touchstart", e=>{
+    touchStartX = e.changedTouches[0].screenX;
   });
 
- // =============================
-// MOBILE SWIPE NAVIGATION
-// =============================
+  lightbox.addEventListener("touchend", e=>{
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
 
-let touchStartX = 0;
-let touchEndX = 0;
+  function handleSwipe(){
 
-lightbox.addEventListener("touchstart", e => {
-  touchStartX = e.changedTouches[0].screenX;
-});
+    const swipeDistance = touchEndX - touchStartX;
 
-lightbox.addEventListener("touchend", e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-});
+    if(Math.abs(swipeDistance) < 50) return;
 
-function handleSwipe(){
+    if(swipeDistance < 0){
+      currentIndex++;
+      if(currentIndex >= galleryImages.length) currentIndex = 0;
+      showImage();
+    }
 
-  const swipeDistance = touchEndX - touchStartX;
+    if(swipeDistance > 0){
+      currentIndex--;
+      if(currentIndex < 0) currentIndex = galleryImages.length - 1;
+      showImage();
+    }
 
-  if(Math.abs(swipeDistance) < 50) return;
-
-  if(swipeDistance < 0){
-    currentIndex++;
-    if(currentIndex >= galleryImages.length) currentIndex = 0;
-    showImage();
-  }
-
-  if(swipeDistance > 0){
-    currentIndex--;
-    if(currentIndex < 0) currentIndex = galleryImages.length - 1;
-    showImage();
   }
 
 }
-
-} // ← this closing bracket fixes the script
 
 // =============================
 // PARTICLES
