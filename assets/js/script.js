@@ -129,7 +129,24 @@ document.body.classList.add("lightbox-open");
   });
 
   // SHOW IMAGE
-  function showImage(){
+  function showImage(index, direction="next"){
+
+  lightboxImg.classList.remove("zoomed");
+  lightboxImg.style.transform = "scale(1) translate(0,0)";
+  zoomLevel = 1;
+
+  lightboxImg.classList.remove("slide-next","slide-prev");
+
+  void lightboxImg.offsetWidth;
+
+  if(direction === "next"){
+    lightboxImg.classList.add("slide-next");
+  }else{
+    lightboxImg.classList.add("slide-prev");
+  }
+
+  lightboxImg.src = galleryImages[index];
+}
 
 lightboxImg.classList.remove("show");
 
@@ -147,17 +164,13 @@ lightboxImg.classList.add("show");
 
   // NEXT
   nextBtn?.addEventListener("click", () => {
-    currentIndex++;
-    if(currentIndex >= galleryImages.length) currentIndex = 0;
-    showImage();
-  });
+  currentIndex = (currentIndex+1) % galleryImages.length;
+showImage(currentIndex,"next");
 
   // PREV
   prevBtn?.addEventListener("click", () => {
-    currentIndex--;
-    if(currentIndex < 0) currentIndex = galleryImages.length - 1;
-    showImage();
-  });
+  currentIndex = (currentIndex-1 + galleryImages.length) % galleryImages.length;
+showImage(currentIndex,"prev");
 
   // CLOSE
  closeBtn?.addEventListener("click", () => {
@@ -217,35 +230,31 @@ lightboxImg.classList.add("show");
   let touchStartX = 0;
   let touchEndX = 0;
 
- lightboxImg.addEventListener("touchstart", e=>{
-    touchStartX = e.changedTouches[0].screenX;
-  });
+lightboxImg.addEventListener("touchstart", e=>{
+  touchStartX = e.changedTouches[0].screenX;
+});
 
-  lightbox.addEventListener("touchend", e=>{
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  });
+lightboxImg.addEventListener("touchend", e=>{
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
 
   function handleSwipe(){
 
     const swipeDistance = touchEndX - touchStartX;
 
-    if(Math.abs(swipeDistance) < 50) return;
+    if(Math.abs(swipeDistance) < 30) return;
 
     if(swipeDistance < 0){
-      currentIndex++;
-      if(currentIndex >= galleryImages.length) currentIndex = 0;
-      showImage();
+  currentIndex = (currentIndex+1) % galleryImages.length;
+  showImage(currentIndex,"next");
+}else{
+  currentIndex = (currentIndex-1 + galleryImages.length) % galleryImages.length;
+  showImage(currentIndex,"prev");
+}
     }
 
-    if(swipeDistance > 0){
-      currentIndex--;
-      if(currentIndex < 0) currentIndex = galleryImages.length - 1;
-      showImage();
-    }
-
-  }
-
+  
 }
 
 // =============================
