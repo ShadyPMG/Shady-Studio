@@ -148,11 +148,38 @@ if (lightbox && lightboxImg) {
   // CLOSE
   closeBtn?.addEventListener("click", () => {
     lightbox.classList.remove("active");
+    zoomed = false;
+    lightboxImg.style.transform = "scale(1)";
+    lightboxImg.style.transformOrigin = "center";
+    lightboxImg.style.cursor = "zoom-in";
   });
 
   lightbox.addEventListener("click", e=>{
     if(e.target === lightbox){
       lightbox.classList.remove("active");
+      zoomed = false;
+      lightboxImg.style.transform = "scale(1)";
+      lightboxImg.style.transformOrigin = "center";
+      lightboxImg.style.cursor = "zoom-in";
+    }
+  });
+
+  // DOUBLE CLICK ZOOM + PAN
+  lightboxImg.addEventListener("dblclick", e => {
+    const rect = lightboxImg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    if (!zoomed) {
+      lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+      lightboxImg.style.transform = "scale(1.6)";
+      lightboxImg.style.cursor = "zoom-out";
+      zoomed = true;
+    } else {
+      lightboxImg.style.transform = "scale(1)";
+      lightboxImg.style.transformOrigin = "center";
+      lightboxImg.style.cursor = "zoom-in";
+      zoomed = false;
     }
   });
 
