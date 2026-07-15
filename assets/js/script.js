@@ -350,3 +350,57 @@ for (let i = 0; i < particleCount; i++) {
   initParticles();
   animate();
 }
+
+// =============================
+// HOME PAGE DYNAMIC IMAGE ROTATION (SWAP METHOD)
+// =============================
+
+// 1. Target the existing image tags directly
+const sketchImgElement = document.getElementById("home-sketch-img");
+const projectImgElement = document.getElementById("home-project-img");
+
+// SAFETY CHECK: Only run if these exact images exist on the page
+if (sketchImgElement && projectImgElement) {
+
+  // YOUR MASTER ARTWORK DATABASE
+  const artworkData = [
+    { url: 'assets/images/dark-sketch-1.jpg', category: 'sketches', date: '2026-05-20' },
+    { url: 'assets/images/dark-sketch-2.jpg', category: 'sketches', date: '2026-01-15' },
+    { url: 'assets/images/surreal-project-1.jpg', category: 'projects', date: '2026-06-10' },
+    { url: 'assets/images/surreal-project-2.jpg', category: 'projects', date: '2026-02-05' }
+  ];
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+
+  // THE BRAIN: Function to find the right image (Unchanged)
+  function getFeaturedImage(categoryName) {
+    let filteredArt = artworkData.filter(art => art.category === categoryName);
+    filteredArt.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (filteredArt.length === 0) return null;
+
+    const newestArt = filteredArt[0];
+    const daysOld = (currentDate - new Date(newestArt.date)) / (1000 * 60 * 60 * 24);
+
+    if (daysOld <= 30) {
+      return newestArt.url;
+    } else {
+      const rotationIndex = currentMonth % filteredArt.length;
+      return filteredArt[rotationIndex].url;
+    }
+  }
+
+  // 2. SWAP THE IMAGES
+  const chosenSketch = getFeaturedImage('sketches');
+  const chosenProject = getFeaturedImage('projects');
+
+  // Instead of innerHTML, we just update the 'src' attribute
+  if (chosenSketch) {
+    sketchImgElement.src = chosenSketch;
+  }
+  
+  if (chosenProject) {
+    projectImgElement.src = chosenProject;
+  }
+}
