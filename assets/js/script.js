@@ -363,11 +363,15 @@ const projectImgElement = document.getElementById("home-project-img");
 if (sketchImgElement && projectImgElement) {
 
   // YOUR MASTER ARTWORK DATABASE
-  const artworkData = [
-    { url: 'assets/images/dark-sketch-1.jpg', category: 'sketches', date: '2026-05-20' },
-    { url: 'assets/images/dark-sketch-2.jpg', category: 'sketches', date: '2026-01-15' },
-    { url: 'assets/images/surreal-project-1.jpg', category: 'projects', date: '2026-06-10' },
-    { url: 'assets/images/surreal-project-2.jpg', category: 'projects', date: '2026-02-05' }
+const artworkData = [
+    // This brand new sketch will instantly force its way to the homepage!
+    { url: 'assets/images/Sunflower.jpg', category: 'sketches', date: '2026-07-14' }, 
+
+    { url: 'assets/images/Pokemoncard.png', category: 'sketches', date: '2026-06-01' },
+    { url: 'assets/images/God.jpg', category: 'sketches', date: '2026-05-15' },
+    
+    { url: 'assets/images/Carmagazine3.JPG', category: 'projects', date: '2026-04-10' },
+    { url: 'assets/images/Jose (13).jpg', category: 'projects', date: '2026-03-01' }
   ];
 
   const currentDate = new Date();
