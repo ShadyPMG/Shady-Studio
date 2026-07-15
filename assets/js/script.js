@@ -364,12 +364,11 @@ if (sketchImgElement && projectImgElement) {
 
   // YOUR MASTER ARTWORK DATABASE
 const artworkData = [
-    // This brand new sketch will instantly force its way to the homepage!
-    { url: 'assets/images/Sunflower.jpg', category: 'sketches', date: '2026-07-14' }, 
-
+    // SKETCHES / ILLUSTRATIONS
     { url: 'assets/images/Pokemoncard.png', category: 'sketches', date: '2026-06-01' },
     { url: 'assets/images/God.jpg', category: 'sketches', date: '2026-05-15' },
     
+    // PROJECTS / PHOTOGRAPHY
     { url: 'assets/images/Carmagazine3.JPG', category: 'projects', date: '2026-04-10' },
     { url: 'assets/images/Jose (13).jpg', category: 'projects', date: '2026-03-01' }
   ];
